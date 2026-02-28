@@ -1,0 +1,20 @@
+<form th:action="@{/add-book}" th:object="${book}" method="post" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <label>Title:</label>
+    <input type="text" th:field="*{title}" />
+    <span style="color:red" th:errors="*{title}"></span>
+    <br><br>
+
+    <label>Author:</label>
+    <input type="text" th:field="*{author}" />
+    <span style="color:red" th:errors="*{author}"></span>
+    <br><br>
+
+    <label>Price:</label>
+    <input type="number" step="0.01" th:field="*{price}" />
+    <span style="color:red" th:errors="*{price}"></span>
+    <br><br>
+
+    <button type="submit">Add Book</button>
+
+</form>

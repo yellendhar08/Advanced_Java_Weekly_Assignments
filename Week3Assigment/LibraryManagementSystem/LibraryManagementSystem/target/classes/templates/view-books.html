@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>View Books</title>
+</head>
+<body>
+
+<h2>All Books</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.price}"></td>
+        <td>
+            <a th:href="@{/book/{id}(id=${book.id})}">View</a>
+            |
+
+            <!-- Proper DELETE using POST -->
+            <form th:action="@{/delete/{id}(id=${book.id})}"
+                  method="post"
+                  style="display:inline;">
+                <button type="submit"
+                        onclick="return confirm('Are you sure you want to delete this book?');">
+                    Delete
+                </button>
+            </form>
+
+        </td>
+    </tr>
+</table>
+
+<br>
+<a th:href="@{/add-book}">Add New Book</a>
+<br><br>
+<a th:href="@{/dashboard}">Back to Dashboard</a>
+
+</body>
+</html>
