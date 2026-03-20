@@ -1,0 +1,50 @@
+package com.educommerce.attendanceservice.controller;
+
+import com.educommerce.attendanceservice.dto.AttendanceRequestDTO;
+import com.educommerce.attendanceservice.dto.AttendanceResponseDTO;
+import com.educommerce.attendanceservice.service.AttendanceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/attendance")
+public class AttendanceController {
+
+    @Autowired
+    private AttendanceService attendanceService;
+
+    @PostMapping
+    public ResponseEntity<AttendanceResponseDTO> markAttendance(@RequestBody AttendanceRequestDTO dto) {
+        return new ResponseEntity<>(attendanceService.markAttendance(dto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/student/{studentId}")
+    public ResponseEntity<List<AttendanceResponseDTO>> getByStudent(@PathVariable Long studentId) {
+        return ResponseEntity.ok(attendanceService.getAttendanceByStudent(studentId));
+    }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<AttendanceResponseDTO>> getByCourse(@PathVariable Long courseId) {
+        return ResponseEntity.ok(attendanceService.getAttendanceByCourse(courseId));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AttendanceResponseDTO> updateAttendance(@PathVariable Long id, @RequestBody AttendanceRequestDTO dto) {
+        return ResponseEntity.ok(attendanceService.updateAttendance(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAttendance(@PathVariable Long id) {
+        return ResponseEntity.ok(attendanceService.deleteAttendance(id));
+    }
+
+    @GetMapping("/percentage/{studentId}")
+    public ResponseEntity<Double> getAttendancePercentage(@PathVariable Long studentId) {
+        return ResponseEntity.ok(attendanceService.getAttendancePercentage(studentId));
+    }
+
+}
